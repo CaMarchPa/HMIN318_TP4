@@ -5,7 +5,6 @@ using namespace cimg_library;
 
 int main(int argc, char const ** argv) {
 
-
 	if ( argc != 4) {
 		std::cout << "USAGE : ./main image_F image_G nbre_iteration" << std::endl;
 		return 0;
@@ -40,7 +39,7 @@ int main(int argc, char const ** argv) {
 					float z = list[2] (i, j, k);
 
 					float norme = pow ( x, 2 ) + pow ( y, 2 ) + pow ( z, 2 );
-					if ( f != g && (x != 0 || y != 0 || z != 0) ) {
+					if ( f != g && norme != 0 ) {
 
 						// norme = sqrt (norme);
 						float g_f = g - f;
@@ -62,7 +61,7 @@ int main(int argc, char const ** argv) {
 		field_vector[0] = field_vector[0].blur (5, 5, 5, true, true);
 		field_vector[1] = field_vector[1].blur (5, 5, 5, true, true);
 		field_vector[2] = field_vector[2].blur (5, 5, 5, true, true);
-		
+
 		for ( int j = 0; j < height; j++ ) {
 			for ( int i = 0; i < width; i++ ) {
 				for ( int k = 0; k < depth; k++ ) {
