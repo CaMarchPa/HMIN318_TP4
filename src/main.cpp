@@ -4,7 +4,7 @@
 using namespace cimg_library;
 
 int main(int argc, char const ** argv) {
-	
+
 
 	if ( argc != 4) {
 		std::cout << "USAGE : ./main image_F image_G nbre_iteration" << std::endl;
@@ -39,8 +39,9 @@ int main(int argc, char const ** argv) {
 					float y = list[1] (i, j, k);
 					float z = list[2] (i, j, k);
 
+					float norme = pow ( x, 2 ) + pow ( y, 2 ) + pow ( z, 2 );
 					if ( f != g && (x != 0 || y != 0 || z != 0) ) {
-						float norme = pow ( x, 2 ) + pow ( y, 2 ) + pow ( z, 2 );
+
 						// norme = sqrt (norme);
 						float g_f = g - f;
 						vector[0] = ( g_f * x ) / norme;
@@ -59,10 +60,17 @@ int main(int argc, char const ** argv) {
 
 		// déformation de G
 		field_vector[0] = field_vector[0].blur (5, 5, 5, true, true);
+		field_vector[1] = field_vector[1].blur (5, 5, 5, true, true);
+		field_vector[2] = field_vector[2].blur (5, 5, 5, true, true);
+		
 		for ( int j = 0; j < height; j++ ) {
 			for ( int i = 0; i < width; i++ ) {
 				for ( int k = 0; k < depth; k++ ) {
-					img_GPrime (i, j, k) = field_vector[0](i, j, k);
+					int x = field_vector[0] (i, j, k) + i;
+					int y = field_vector[1] (i, j, k) + j;
+					int z = field_vector[2] (i, j, k) + k;
+
+					img_GPrime (i, j, k) = img_F.linear_atXYZ(x, y, z);
 				}
 			}
 		}
